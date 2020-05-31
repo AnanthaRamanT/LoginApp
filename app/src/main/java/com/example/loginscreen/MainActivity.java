@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences pref;
     String email,password;
     String id;
-    public static String userid="0";
+    private Boolean userid=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,22 +39,20 @@ public class MainActivity extends AppCompatActivity {
         id= Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
 
 
-        SharedPreferences.Editor editor=pref.edit();
-        editor.putString("mail",email);
-        editor.putString("password",password);
-        editor.putString("log",id);
-        editor.putString("logid",userid);
-        editor.commit();
+
+
+        userid=pref.getBoolean("saveid",false);
 
         String deviceid=pref.getString("log","0");
         String loginuser=pref.getString("logid","0");
 
-        if(deviceid!=null && !loginuser.equals("0")){
+
+
+
+        if(userid==true){
 
             Intent i = new Intent(this, SecondActivity.class);
             startActivity(i);
-           // finish();
-
         }
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +61,14 @@ public class MainActivity extends AppCompatActivity {
 
                 email = etdata1.getText().toString();
                 password = etdata2.getText().toString();
+
+
+                SharedPreferences.Editor editor=pref.edit();
+                editor.putString("mail",email);
+                editor.putString("password",password);
+                editor.putString("log",id);
+                editor.putBoolean("saveid",true);
+                editor.commit();
 
                 if (email!=null && email.length()>6) {
                     if (password!=null && password.length()>6) {
@@ -90,16 +96,11 @@ public class MainActivity extends AppCompatActivity {
     public void nextpage(){
 
 
-               userid="1";
                 Intent i = new Intent(this, SecondActivity.class);
                 startActivity(i);
-               // finish();
+
 
     }
-
-
-
-
 
 
 
