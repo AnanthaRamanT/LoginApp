@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
             Intent i = new Intent(this, SecondActivity.class);
             startActivity(i);
+            finish();
         }
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -62,13 +63,6 @@ public class MainActivity extends AppCompatActivity {
                 email = etdata1.getText().toString();
                 password = etdata2.getText().toString();
 
-
-                SharedPreferences.Editor editor=pref.edit();
-                editor.putString("mail",email);
-                editor.putString("password",password);
-                editor.putString("log",id);
-                editor.putBoolean("saveid",true);
-                editor.commit();
 
                 if (email!=null && email.length()>6) {
                     if (password!=null && password.length()>6) {
@@ -95,15 +89,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void nextpage(){
 
+        SharedPreferences.Editor editor=pref.edit();
+        editor.putString("mail",email);
+        editor.putString("password",password);
+        editor.putString("log",id);
+        editor.putBoolean("saveid",true);
+        editor.commit();
 
                 Intent i = new Intent(this, SecondActivity.class);
                 startActivity(i);
-
+                finish();
 
     }
-
-
-
     }
 
 
